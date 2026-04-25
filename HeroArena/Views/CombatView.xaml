@@ -1,0 +1,81 @@
+<Window x:Class="HeroArena.Views.CombatView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Combat" Height="500" Width="800"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Background="#1e1e1e">
+        
+        <StackPanel Margin="20">
+
+            <!-- TITRE -->
+            <TextBlock Text="⚔️ Combat Arena"
+                       FontSize="26"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
+
+            <!-- HERO JOUEUR -->
+            <TextBlock Text="{Binding PlayerHero.Name}"
+                       Foreground="LightGreen"
+                       FontSize="18"/>
+
+            <ProgressBar Minimum="0"
+                         Maximum="200"
+                         Value="{Binding PlayerHP}"
+                         Height="20"
+                         Margin="0,5,0,10"/>
+
+            <TextBlock Text="{Binding PlayerHP, StringFormat=HP: {0}}"
+                       Foreground="White"/>
+
+            <!-- HERO ENNEMI -->
+            <TextBlock Text="{Binding EnemyHero.Name}"
+                       Foreground="Red"
+                       FontSize="18"
+                       Margin="0,20,0,0"/>
+
+            <ProgressBar Minimum="0"
+                         Maximum="200"
+                         Value="{Binding EnemyHP}"
+                         Height="20"
+                         Margin="0,5,0,10"/>
+
+            <TextBlock Text="{Binding EnemyHP, StringFormat=HP: {0}}"
+                       Foreground="White"/>
+
+            <!-- SPELLS -->
+            <TextBlock Text="Spells :"
+                       Foreground="White"
+                       Margin="0,20,0,5"/>
+
+            <ItemsControl ItemsSource="{Binding PlayerSpells}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Name}"
+                                Margin="5"
+                                Height="35"
+                                Background="#4CAF50"
+                                Foreground="White"
+                                Command="{Binding DataContext.AttackCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- SCORE -->
+            <TextBlock Text="{Binding Score, StringFormat=Score: {0}}"
+                       Foreground="Gold"
+                       FontSize="16"
+                       Margin="0,20,0,10"/>
+
+            <!-- RESTART -->
+            <Button Content="Rejouer"
+                    Height="40"
+                    Background="#2196F3"
+                    Foreground="White"
+                    Command="{Binding RestartCommand}"/>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

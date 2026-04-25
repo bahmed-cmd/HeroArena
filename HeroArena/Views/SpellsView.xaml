@@ -1,0 +1,75 @@
+<Window x:Class="HeroArena.Views.SpellsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Spells" Height="500" Width="750"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Background="#1e1e1e">
+
+        <StackPanel Margin="20">
+
+            <!-- TITRE -->
+            <TextBlock Text="📜 Liste des Spells"
+                       FontSize="24"
+                       Foreground="White"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
+
+            <!-- FILTRE PAR HERO -->
+            <ComboBox ItemsSource="{Binding Heroes}"
+                      SelectedItem="{Binding SelectedHero}"
+                      DisplayMemberPath="Name"
+                      Height="30"
+                      Margin="0,0,0,15"
+                      Background="#2d2d2d"
+                      Foreground="White"/>
+
+            <!-- LISTE SPELLS -->
+            <ListBox ItemsSource="{Binding Spells}"
+                     SelectedItem="{Binding SelectedSpell}"
+                     Height="200"
+                     Background="#2d2d2d"
+                     BorderThickness="0">
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#3a3a3a"
+                                Margin="5"
+                                Padding="10"
+                                CornerRadius="8">
+
+                            <TextBlock Text="{Binding Name}"
+                                       Foreground="White"
+                                       FontSize="14"/>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+            <!-- DETAILS SPELL -->
+            <StackPanel Margin="0,20,0,0">
+
+                <TextBlock Text="📋 Détails du sort"
+                           FontSize="18"
+                           Foreground="White"
+                           Margin="0,0,0,10"/>
+
+                <TextBlock Text="{Binding SelectedSpell.Name}"
+                           Foreground="White"
+                           FontSize="16"/>
+
+                <TextBlock Text="{Binding SelectedSpell.Description}"
+                           Foreground="Gray"
+                           Margin="0,5"/>
+
+                <TextBlock Text="{Binding SelectedSpell.Damage, StringFormat=Dégâts: {0}}"
+                           Foreground="Orange"
+                           FontWeight="Bold"/>
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+</Window>
