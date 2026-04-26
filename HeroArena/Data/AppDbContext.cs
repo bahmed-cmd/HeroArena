@@ -1,11 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using HeroArena.Models;
+using HeroArena.Services;
 
 namespace HeroArena.Data
 {
     public class AppDbContext : DbContext
     {
-        // ===== TABLES =====
         public DbSet<Login> Logins { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Hero> Heroes { get; set; }
@@ -13,21 +13,14 @@ namespace HeroArena.Data
         public DbSet<PlayerHero> PlayerHeroes { get; set; }
         public DbSet<HeroSpell> HeroSpells { get; set; }
 
-        // ===== CONFIG DB =====
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(
-                "Server=localhost\\SQLEXPRESS01;" +
-                "Database=ExerciceHero;" +
-                "Trusted_Connection=True;" +
-                "TrustServerCertificate=True;"
-            );
+            // ✅ Connection string dynamique depuis AppSettings
+            options.UseSqlServer(AppSettings.Instance.ConnectionString);
         }
 
-        // ===== CONFIG TABLES / RELATIONS =====
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // ⚠️ FIX NOMS (IMPORTANT)
             modelBuilder.Entity<Login>().ToTable("Login");
             modelBuilder.Entity<Hero>().ToTable("Hero");
             modelBuilder.Entity<Player>().ToTable("Player");
@@ -35,7 +28,6 @@ namespace HeroArena.Data
             modelBuilder.Entity<PlayerHero>().ToTable("PlayerHero");
             modelBuilder.Entity<HeroSpell>().ToTable("HeroSpell");
 
-            // ===== RELATIONS MANY-TO-MANY =====
             modelBuilder.Entity<PlayerHero>()
                 .HasKey(ph => new { ph.PlayerID, ph.HeroID });
 
